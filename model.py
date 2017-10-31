@@ -1,6 +1,11 @@
 import csv
 import cv2
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Flatten, Dense, Lambda, Cropping2D
+from keras.layers.convolutional import Convolution2D
+import sklearn
+from sklearn.model_selection import train_test_split
 
 def loadDrivingLog(path='./data'):
     """
@@ -57,12 +62,10 @@ def augmentImages(images, angles):
 
     return augmented_images, augmented_angles
 
-from keras.models import Sequential
-from keras.layers import Flatten, Dense, Lambda, Cropping2D
-from keras.layers.convolutional import Convolution2D
-#from keras.layers.pooling import Pooling2D
-
 def nvidiaModel():
+    """
+    Returns a model using the NVIDIA architecture as shown in the lecture. 
+    """
     model = Sequential()
     model.add(Lambda(lambda x: x / 255.0 - 0.5, input_shape=(160, 320, 3)))
     model.add(Cropping2D(cropping=((70, 25), (0, 0))))
@@ -78,11 +81,9 @@ def nvidiaModel():
     model.add(Dense(1))
     return model
 
-import sklearn
-
 def generator(samples, batch_size=32):
     """
-    Generate the required images and angles for training and validation
+    Generate the required images and angles for training and validation.
     """
     num_samples = len(samples)
     while 1: # Loop forever so the generator never terminates
@@ -105,8 +106,6 @@ def generator(samples, batch_size=32):
 samples = loadDrivingLog()
 
 # Sample splitting
-from sklearn.model_selection import train_test_split
-
 train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 
 print('Train samples: {}'.format(len(train_samples)))
