@@ -25,23 +25,23 @@ Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/4
 #### Submission includes all required files and can be used to run the simulator in autonomous mode
 
 My project includes the following files:
-* model.py containing the script to create and train the model
-* drive.py for driving the car in autonomous mode
-* model.h5 containing a trained convolution neural network 
-* Writeup.md summarizing the results
+* [model.py](model.py) containing the script to create and train the model
+* [drive.py](drive.py) for driving the car in autonomous mode
+* [model.h5](model.h5) containing a trained convolution neural network 
+* [Writeup.md](Writeup.md) summarizing the results
 
 ### Quality of Code
 
 #### Submission includes functional code
 
-Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing the following command:
+Using the Udacity provided simulator and my [drive.py](drive.py) file, the car can be driven autonomously around the track by executing the following command:
 ```sh
 python drive.py model.h5
 ```
 
 #### Submission code is usable and readable
 
-The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+The [model.py](model.py) file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
 The code uses a generator ([model.py line 123](model.py#L123)) for memory-efficiency. Instead of storing the preprocessed data in memory all at once, using a generator we can pull pieces of the data and process them on the fly only when we need them, which is much more memory-efficient.
 
