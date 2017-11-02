@@ -74,7 +74,6 @@ The model summary including output shapes and number of parameters per layer is 
 | Dense           | 10             | 510     |
 | Dense           | 1              | 11      |
 
-|                           |         |
 |:--------------------------|--------:|
 | **Total params:**         | 348,219 |
 | **Trainable params:**     | 348,219 |
