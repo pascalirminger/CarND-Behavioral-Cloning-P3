@@ -57,27 +57,27 @@ The data is normalized in the model using a Keras lambda layer ([model.py line 7
 
 The model summary including output shapes and number of parameters per layer is as follows:
 
-| Layer           | Output Shape   | Param # |
-|:----------------|:--------------:|--------:|
-| Input           | 160x320x3      | 0       |
-| Lambda          | 160x320x3      | 0       |
-| Cropping2D      | 65x320x3       | 0       |
-| Convolution2D   | 31x158x24      | 1824    |
-| Convolution2D   | 14x77x36       | 21636   |
-| Convolution2D   | 5x37x48        | 43248   |
-| Convolution2D   | 3x35x64        | 27712   |
-| Convolution2D   | 1x33x64        | 36928   |
-| Flatten         | 2112           | 0       |
-| Dense           | 100            | 211300  |
-| Dense           | 50             | 5050    |
-| Dense           | 10             | 510     |
-| Dense           | 1              | 11      |
+| Layer           | Output Shape   | # of Params |
+|:----------------|:--------------:|------------:|
+| Input           | 160x320x3      | 0           |
+| Lambda          | 160x320x3      | 0           |
+| Cropping2D      | 65x320x3       | 0           |
+| Convolution2D   | 31x158x24      | 1,824       |
+| Convolution2D   | 14x77x36       | 21,636      |
+| Convolution2D   | 5x37x48        | 43,248      |
+| Convolution2D   | 3x35x64        | 27,712      |
+| Convolution2D   | 1x33x64        | 36,928      |
+| Flatten         | 2,112          | 0           |
+| Dense           | 100            | 211,300     |
+| Dense           | 50             | 5,050       |
+| Dense           | 10             | 510         |
+| Dense           | 1              | 11          |
 
-|                           |         |
-|:--------------------------|--------:|
-| **Total params:**         | 348,219 |
-| **Trainable params:**     | 348,219 |
-| **Non-trainable params:** | 0       |
+|                                      |         |
+|:-------------------------------------|--------:|
+| **Total # of Params:**               | 348,219 |
+| **Total # of Trainable Params:**     | 348,219 |
+| **Total # of Non-trainable Params:** | 0       |
 
 #### Attempts to reduce overfitting in the model
 
@@ -136,4 +136,4 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 3. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was three. I used an adam optimizer so that manually training the learning rate wasn't necessary.
