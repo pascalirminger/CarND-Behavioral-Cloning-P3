@@ -44,17 +44,17 @@ python drive.py model.h5
 
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
-The code uses a generator (model.py line 123) for memory-efficiency. Instead of storing the preprocessed data in memory all at once, using a generator we can pull pieces of the data and process them on the fly only when we need them, which is much more memory-efficient.
+The code uses a generator ([model.py line 123](model.py#L123)) for memory-efficiency. Instead of storing the preprocessed data in memory all at once, using a generator we can pull pieces of the data and process them on the fly only when we need them, which is much more memory-efficient.
 
 ### Model Architecture and Training Strategy
 
 #### An appropriate model architecture has been employed
 
-The final model architecture (model.py lines 65-82) consists of a convolution neural network based on the architecture described in this [NVIDIA paper](https://arxiv.org/pdf/1604.07316.pdf).
+The final model architecture ([model.py lines 65-82](model.py#L65-L82)) consists of a convolution neural network based on the architecture described in this [NVIDIA paper](https://arxiv.org/pdf/1604.07316.pdf).
 
 The convolutional layers are designed to perform feature extraction. NVIDIA used strided convolutions in the first three convolutional layers with a 2×2 stride and a 5×5 kernel, and a non-strided convolution with a 3×3 kernel size in the final two convolutional layers.
 
-The data is normalized in the model using a Keras lambda layer (model.py line 70). Due to irrelevant image content, the image data is cropped from the top by 70 pixels and from the bottom by 25 pixels (model.py line71). The model includes RELU layers to introduce nonlinearity (model.py lines 72-76).
+The data is normalized in the model using a Keras lambda layer ([model.py line 70](model.py#L70)). Due to irrelevant image content, the image data is cropped from the top by 70 pixels and from the bottom by 25 pixels ([model.py line 71](model.py#L71)). The model includes RELU layers to introduce nonlinearity ([model.py lines 72-76](model.py#L72-L76)).
 
 The model summary including output shapes and number of parameters per layer is as follows:
 
@@ -74,6 +74,7 @@ The model summary including output shapes and number of parameters per layer is 
 | Dense           | 10             | 510     |
 | Dense           | 1              | 11      |
 
+|                           |         |
 |:--------------------------|--------:|
 | **Total params:**         | 348,219 |
 | **Trainable params:**     | 348,219 |
