@@ -21,6 +21,7 @@ My project includes the following files:
 * [drive.py](drive.py) for driving the car in autonomous mode
 * [model.h5](model.h5) containing a trained convolution neural network 
 * [Writeup.md](Writeup.md) summarizing the results
+* [video.mp4](video.mp4) video recording of my vehicle driving autonomously around the track without leaving the road
 
 ## Quality of Code
 
