@@ -21,10 +21,7 @@ The goals / steps of this project are the following:
 
 Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
 
----
-### Files Submitted & Code Quality
-
-#### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
+### Required Files
 
 My project includes the following files:
 * model.py containing the script to create and train the model
@@ -32,53 +29,46 @@ My project includes the following files:
 * model.h5 containing a trained convolution neural network 
 * Writeup.md summarizing the results
 
-#### 2. Submission includes functional code
+### Quality of Code
+
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
 ```sh
 python drive.py model.h5
 ```
 
-#### 3. Submission code is usable and readable
-
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+
+The code uses a generator (model.py line 123) for memory-efficiency. Instead of storing the preprocessed data in memory all at once, using a generator we can pull pieces of the data and process them on the fly only when we need them, which is much more memory-efficient.
 
 ### Model Architecture and Training Strategy
 
-####1. An appropriate model architecture has been employed
+The final model architecture (model.py lines 65-82) consists of a convolution neural network based on the architecture described in this [NVIDIA paper](https://arxiv.org/pdf/1604.07316.pdf).
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+The convolutional layers are designed to perform feature extraction. NVIDIA used strided convolutions in the first three convolutional layers with a 2×2 stride and a 5×5 kernel, and a non-strided convolution with a 3×3 kernel size in the final two convolutional layers.
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+The data is normalized in the model using a Keras lambda layer (model.py line 70). Due to irrelevant image content, the image data is cropped from the top by 70 pixels and from the bottom by 25 pixels (model.py line71). The model includes RELU layers to introduce nonlinearity (model.py lines 72-76). 
 
 ####2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+=== The model contains dropout layers in order to reduce overfitting (model.py lines 21).  ===
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
-
-#### 3. Model parameter tuning
+The model was trained and validated on different data sets to ensure that the model was not overfitting (model.py line 109). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 122).
 
-#### 4. Appropriate training data
-
 Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road, and doing the same in the opposite direction.
 
-For details about how I created the training data, see the next section. 
+=== For details about how I created the training data, see the next section. ===
 
-### Model Architecture and Training Strategy
+### Architecture and Training Documentation
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to start with a well-known architecture found in scientifical papers.
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a convolution neural network model similar to the [NVIDIA architecture](https://arxiv.org/pdf/1604.07316.pdf). This architecture has already been used for End-to-End Deep Learning in Self-Driving Cars.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
-
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that the model had quiet balanced and low mean squared errors on the training set and on the validation set. This implied that the model was pretty well fitted.
 
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track. To improve the driving behavior in these cases, I changed the color space of each image as follows:
 
