@@ -8,7 +8,6 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 [//]: # (Image References)
-
 [image1]: ./examples/final-architecture.png "Final Architecture"
 [image2]: ./examples/center-lane-driving.jpg "Center Lane Driving"
 [image3]: ./examples/recovery-part-1.jpg "Recovery Image"
@@ -100,6 +99,8 @@ Training data was chosen to keep the vehicle driving on the road. I used a combi
 
 The overall strategy for deriving a model architecture was to start with a well-known architecture found in scientifical papers. My first step was to use a convolution neural network model similar to the [NVIDIA architecture](https://arxiv.org/pdf/1604.07316.pdf). This architecture has already been used for End-to-End Deep Learning in Self-Driving Cars.
 
+At the same time, I introduced some data augmentation into the system. First, I added a flipped version of every input image to the dataset ([model.py line 28-41](model.py#L28-L41)). In addition to that, the left and right camera images where introduced with a correction factor on the angle to help the car go back to the lane ([model.py line 57-61](model.py#L57-L61)).
+
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that the model had quiet balanced and low mean squared errors on the training set and on the validation set. This implied that the model was pretty well fitted.
 
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track. To improve the driving behavior in these cases, I changed the color space of each image as follows:
@@ -112,23 +113,17 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 #### Final Model Architecture
 
-
-
-Here is a visualization of the final architecture:
+The final model architecture is shown in the following image:
 
 ![Final Architecture][image1]
 
-#### 2. Attempts to reduce overfitting in the model
-
-I decided not to modify the model by applying regularization techniques like Dropout or Max pooling.
-
-#### 3. Creation of the Training Set & Training Process
+#### Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
 ![Center Lane Driving][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to navigate back onto the road. These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to navigate back onto the road. These images show what a recovery looks like starting from the right edge of the track:
 
 ![Recovery Image][image3]
 ![Recovery Image][image4]
@@ -138,11 +133,6 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 
 ![Normal Image][image6]
 ![Flipped Image][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
