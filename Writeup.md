@@ -9,13 +9,13 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/nvidia-cnn-architecture.png "NVIDIA architecture"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: ./examples/nvidia-cnn-architecture.png "NVIDIA Architecture"
+[image2]: ./examples/center-lane-driving.jpg "Center Lane Driving"
+[image3]: ./examples/recovery-part-1.jpg "Recovery Image"
+[image4]: ./examples/recovery-part-2.jpg "Recovery Image"
+[image5]: ./examples/recovery-part-3.jpg "Recovery Image"
+[image6]: ./examples/flipped-1.jpg "Normal Image"
+[image7]: ./examples/flipped-2.jpg "Flipped Image"
 
 ## Rubric Points
 
@@ -84,25 +84,25 @@ The final model architecture (model.py lines 65-82) consisted of a convolution n
 
 Here is a visualization of the NVIDIA architecture:
 
-![NVIDIA architecture][image1]
+![NVIDIA Architecture][image1]
 Source: https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/
 
 ####3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![alt text][image2]
+![Center Lane Driving][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to navigate back onto the road. These images show what a recovery looks like starting from ... :
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+![Recovery Image][image3]
+![Recovery Image][image4]
+![Recovery Image][image5]
 
 To augment the data sat, I also flipped images and angles thinking that this would double the dataset. For example, here is an image that has then been flipped:
 
-![alt text][image6]
-![alt text][image7]
+![Normal Image][image6]
+![Flipped Image][image7]
 
 Etc ....
 
