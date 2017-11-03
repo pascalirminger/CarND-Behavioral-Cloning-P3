@@ -41,23 +41,48 @@ def loadImages(log_line, path='./data', correction=0.2):
     angles.append(steering_center - correction)  # right camera
     return images, angles
 
+def changeBrightness(image):
+    """
+    Returns the provided image with altered brightness.
+    """
+    # Convert color space and information depth
+    new_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+    new_image = np.array(new_image, dtype = np.float64)
+    # Change brightness
+    random_brightness = .5 + np.random.uniform()
+    new_image[:,:,2] = new_image[:,:,2] * random_brightness
+    new_image[:,:,2][new_image[:,:,2]>255] = 255
+    # Re-convert color space and information depth
+    new_image = np.array(new_image, dtype = np.uint8)
+    new_image = cv2.cvtColor(new_image,cv2.COLOR_HSV2RGB)
+    return new_image
+
 def augmentImages(images, angles):
     """
     Returns augmented data based on the provided image and steering angle.
     Augmentation techniques include extraction of center, left, and right
-    image as well as flipping the image/angle
+    image as well as flipping the image/angle and changing the brightness
+    of the image.
     """
-    augmented_images = images
-    augmented_angles = angles
+    augmented_images = []
+    augmented_angles = []
 
     # Data augmentation
     for i in range(len(images)):
-        image = images[i]
-        angle = angles[i]
+        image_orig = images[i]
+        angle_orig = angles[i]
+        # Change brightness
+        image_bright = changeBrightness(image_orig)
+        # Add image to list
+        augmented_images.append(image_bright)
+        augmented_angles.append(angle_orig)
         # Flip image
-        image_flipped = np.fliplr(image)
-        angle_flipped = -angle
-        augmented_images.append(image_flipped)
+        image_flipped = np.fliplr(image_orig)
+        angle_flipped = -angle_orig
+        # Change brightness
+        image_flipped_bright = changeBrightness(image_flipped)
+        # Add image to list
+        augmented_images.append(image_flipped_bright)
         augmented_angles.append(angle_flipped)
 
     return augmented_images, augmented_angles
@@ -124,7 +149,7 @@ model = nvidiaModel()
 model.compile(loss='mse', optimizer='adam')
 history_object = model.fit_generator(train_generator, samples_per_epoch= \
             len(train_samples), validation_data=validation_generator, \
-            nb_val_samples=len(validation_samples), nb_epoch=5)
+            nb_val_samples=len(validation_samples), nb_epoch=3)
 
 model.save('model.h5')
 
