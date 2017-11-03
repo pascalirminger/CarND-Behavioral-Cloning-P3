@@ -44,32 +44,34 @@ python drive.py model.h5
 
 The [model.py](model.py) file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
-The code uses a generator ([model.py line 123](model.py#L123)) for memory-efficiency. Instead of storing the preprocessed data in memory all at once, using a generator we can pull pieces of the data and process them on the fly only when we need them, which is much more memory-efficient.
+The code uses a generator ([model.py lines 125-127](model.py#L125-L127)) for memory-efficiency. Instead of storing the preprocessed data in memory all at once, using a generator we can pull pieces of the data and process them on the fly only when we need them, which is much more memory-efficient.
 
 ### Model Architecture and Training Strategy
 
 #### An appropriate model architecture has been employed
 
-The final model architecture ([model.py lines 65-82](model.py#L65-L82)) consists of a convolution neural network based on the architecture described in this [NVIDIA paper](https://arxiv.org/pdf/1604.07316.pdf).
+The final model architecture ([model.py lines 65-84](model.py#L65-L84)) consists of a convolution neural network based on the architecture described in this [NVIDIA paper](https://arxiv.org/pdf/1604.07316.pdf).
 
 The convolutional layers are designed to perform feature extraction. NVIDIA used strided convolutions in the first three convolutional layers with a 2×2 stride and a 5×5 kernel, and a non-strided convolution with a 3×3 kernel size in the final two convolutional layers.
 
-The data is normalized in the model using a Keras lambda layer ([model.py line 70](model.py#L70)). Due to irrelevant image content, the image data is cropped from the top by 70 pixels and from the bottom by 25 pixels ([model.py line 71](model.py#L71)). The model includes RELU layers to introduce nonlinearity ([model.py lines 72-76](model.py#L72-L76)).
+Due to irrelevant image content, the image data is cropped from the top by 70 pixels and from the bottom by 25 pixels ([model.py line 70](model.py#L70)). The data is normalized in the model using a Keras lambda layer ([model.py line 71](model.py#L71)). The model includes RELU layers to introduce nonlinearity ([model.py lines 72-76](model.py#L72-L76)).
 
 The model summary including output shapes and number of parameters per layer is as follows:
 
 | Layer           | Output Shape   | # of Params |
 |:----------------|:--------------:|------------:|
 | Input           | 160x320x3      | 0           |
-| Lambda          | 160x320x3      | 0           |
 | Cropping2D      | 65x320x3       | 0           |
+| Lambda          | 65x320x3       | 0           |
 | Convolution2D   | 31x158x24      | 1,824       |
 | Convolution2D   | 14x77x36       | 21,636      |
 | Convolution2D   | 5x37x48        | 43,248      |
 | Convolution2D   | 3x35x64        | 27,712      |
 | Convolution2D   | 1x33x64        | 36,928      |
 | Flatten         | 2,112          | 0           |
+| Dropout         | 2,112          | 0           |
 | Dense           | 100            | 211,300     |
+| Dropout         | 100            | 0           |
 | Dense           | 50             | 5,050       |
 | Dense           | 10             | 510         |
 | Dense           | 1              | 11          |
@@ -82,13 +84,11 @@ The model summary including output shapes and number of parameters per layer is 
 
 #### Attempts to reduce overfitting in the model
 
-I decided not to modify the model by applying regularization techniques like Dropout or Max pooling. Instead, I decided to keep the number of training epochs low: only three epochs. In addition to that, the model was trained and validated on different data sets to ensure that the model was not overfitting ([model.py lines 108-116](model.py#L108-L116)).
-
-The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model contains dropout layers in order to reduce overfitting ([model.py lines 78](model.py#L78) and [80](model.py#L80)). In addition to that, the model was trained and validated on different data sets to ensure that the model was not overfitting ([model.py lines 110-118](model.py#L110-L118)). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually ([model.py line 122](model.py#L122)).
+The model used an adam optimizer, so the learning rate was not tuned manually ([model.py line 124](model.py#L124)).
 
 #### Appropriate training data
 
@@ -137,4 +137,4 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was three. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was five. I used an adam optimizer so that manually training the learning rate wasn't necessary.
